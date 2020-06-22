@@ -17,9 +17,30 @@
     />
   </head>
   <body>
+    <!-- Header -->
     <header>
-      <h1>My Todos</h1>
+      <h1>Manik's Todo List</h1>
     </header>
+
+    <!-- Input -->
+    <form class="input-div">
+      <input type="text" id="todo-input" />
+      <button class="todo-button" id="todo-button" type="submit">
+        <i class="fas fa-plus-square"></i>
+      </button>
+    </form>
+
+    <!-- Todo Container -->
+    <h2>Pending Items</h2>
+    <div id="todo-container" class="todo-container">
+      <ul id="todo-list" class="todo-list"></ul>
+    </div>
+
+    <!-- Completed -->
+    <h2>Completed Items</h2>
+    <div id="completed-container" class="completed-container">
+      <ul id="completed-todos" class="completed-todos"></ul>
+    </div>
     <script src="./app.js"></script>
   </body>
 </html>
