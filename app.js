@@ -20,28 +20,8 @@ function updateList(e) {
   //Populate the array with input
   pendingListArray.push(autoCapital(todoInput.value));
   console.log("Pending List: ", pendingListArray);
-  //Create a Todo Div
-  const todoDiv = document.createElement("div");
-  todoDiv.classList.add("todoDiv");
-  //Create, populate and append li to TodoDiv
-  let todoItem = document.createElement("li");
-  todoItem.innerText = autoCapital(todoInput.value);
-  todoItem.classList.add("todo-item");
-  todoDiv.appendChild(todoItem);
-  //Clear todo input value
-  todoInput.value = "";
-  //Add checkbox button
-  let checkbox = document.createElement("button");
-  checkbox.innerHTML = '<i class="fas fa-check"></i>';
-  checkbox.classList.add("checkbox");
-  todoDiv.appendChild(checkbox);
-  //Add Trash button
-  let trashButton = document.createElement("button");
-  trashButton.innerHTML = '<i class="fas fa-trash"></i>';
-  trashButton.classList.add("trashButton");
-  todoDiv.appendChild(trashButton);
-  //Attach the todoDiv to Ul
-  todoList.appendChild(todoDiv);
+  //update UI
+  updatePendingItemsUI(pendingListArray[pendingListArray.length - 1]);
 }
 
 function autoCapital(string) {
@@ -96,4 +76,44 @@ function deleteCheck(e) {
   }
 }
 
-function undoCheck() {}
+function undoCheck(e) {
+  const item = e.target;
+  const undoItem = item.parentElement.firstChild.innerText;
+  //Remove the item from completed list
+  for (let i = 0; i < completedListArray.length; i++) {
+    if (completedListArray[i] === undoItem) {
+      completedListArray.splice(i, 1);
+    }
+  }
+  //Add the item to pending list
+  pendingListArray.push(undoItem);
+  //Remove the item from the completed items list UI
+  item.parentElement.remove();
+  //Add the item to the pending items list UI
+  updatePendingItemsUI(undoItem);
+}
+
+function updatePendingItemsUI(addItem) {
+  //Create a Todo Div
+  const todoDiv = document.createElement("div");
+  todoDiv.classList.add("todoDiv");
+  //Create, populate and append li to TodoDiv
+  let todoItem = document.createElement("li");
+  todoItem.innerText = addItem;
+  todoItem.classList.add("todo-item");
+  todoDiv.appendChild(todoItem);
+  //Clear todo input value
+  todoInput.value = "";
+  //Add checkbox button
+  let checkbox = document.createElement("button");
+  checkbox.innerHTML = '<i class="fas fa-check"></i>';
+  checkbox.classList.add("checkbox");
+  todoDiv.appendChild(checkbox);
+  //Add Trash button
+  let trashButton = document.createElement("button");
+  trashButton.innerHTML = '<i class="fas fa-trash"></i>';
+  trashButton.classList.add("trashButton");
+  todoDiv.appendChild(trashButton);
+  //Attach the todoDiv to Ul
+  todoList.appendChild(todoDiv);
+}
